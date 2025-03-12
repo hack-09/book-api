@@ -27,16 +27,4 @@ A REST API for managing books and user authentication.
 | POST   | `/users/register`     | Register a new user     |
 | POST   | `/users/login`        | Login user & get token  |
 
-## 📷 Screenshots
-All task screenshots are in the `/screenshots/` folder.
-```
-
----
-
-### **8️⃣ `.gitignore`**
-Prevent uploading unnecessary files.
-```
-node_modules/
-.env
-```
 

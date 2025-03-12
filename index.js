@@ -81,6 +81,61 @@ app.delete("/books/:isbn/review", (req, res) => {
     }
 });
 
+
+// async
+function getAllBooks(callback) {
+    setTimeout(() => {
+      callback(null, books);
+    }, 1000); 
+  }
+  
+  app.get("/books", (req, res) => {
+    getAllBooks((err, data) => {
+      if (err) {
+        return res.status(500).json({ error: "Error fetching books" });
+      }
+      res.json(data);
+    });
+  });
+
+  function getBookByISBN(isbn) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const book = books.find((b) => b.isbn === isbn);
+        if (book) {
+          resolve(book);
+        } else {
+          reject("Book not found");
+        }
+      }, 1000);
+    });
+  }
+  
+  app.get("/book/:isbn", (req, res) => {
+    getBookByISBN(req.params.isbn)
+      .then((book) => res.json(book))
+      .catch((err) => res.status(404).json({ error: err }));
+  });
+  
+  async function getBooksByAuthor(author) {
+    return books.filter((b) => b.author.toLowerCase() === author.toLowerCase());
+  }
+  
+  app.get("/books/author/:author", async (req, res) => {
+    const result = await getBooksByAuthor(req.params.author);
+    res.json(result.length ? result : { message: "No books found" });
+  });
+
+  async function getBooksByTitle(title) {
+    return books.filter((b) => b.title.toLowerCase().includes(title.toLowerCase()));
+  }
+  
+  app.get("/books/title/:title", async (req, res) => {
+    const result = await getBooksByTitle(req.params.title);
+    res.json(result.length ? result : { message: "No books found" });
+  });
+  
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {
