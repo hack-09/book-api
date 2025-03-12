@@ -6,7 +6,7 @@ A REST API for managing books and user authentication.
 ## 🚀 Installation
 1. Clone the repository:
    ```
-   git clone https://github.com/hack-09/bookstore-api.git
+   git clone https://github.com/hack-09/book-api.git
    ```
 2. Install dependencies:
    ```
